@@ -1,0 +1,75 @@
+Release Notes
+=============
+
+* 11 "One Louder"
+
+General notes
+-------------
+
+With this release we are trying to answer the numerous calls from our users for
+shorter development cycles. From now on we will aim for approximately two major
+releases per year.
+
+Libav 11 is API-, but not ABI-compatible with the previous major release. This
+means that the code using our libraries needs to be rebuilt, but no source
+changes should be required. Note however, that a number of old APIs remain
+deprecated and will be dropped in the near future. All users are strongly
+encouraged to update their code as soon as possible. The doc/APIchanges file in
+the Libav source tree and the migration guide on the wiki should help with
+migration to the new APIs. If those are not sufficient, do not hesitate to
+contact us on IRC or through the user mailing list.
+
+One specific API issue in libavformat deserves mentioning here. When using
+libavcodec for decoding or encoding and libavformat for demuxing or muxing,
+the standard practice was to use the stream codec context (AVStream.codec) for
+actual decoding or encoding. There are multiple problems with this pattern
+(the main one is that the decoder/demuxer or encoder/muxer are not necessarily
+synchronized and may overwrite each other's state), so it is now strongly
+discouraged and will likely be deprecated in the future. Users should instead
+allocate a separate decoding or encoding context and populate it from the
+demuxing codec context (or the reverse for encoding) with the
+avcodec_copy_context() function.
+
+The main highlights of this release include native Opus, VP7, OpenEXR, and On2
+AVC decoders, HEVC encoding through libx265, new APIs for exporting ReplayGain
+and display transformation metadata and countless bug fixes. A large effort was
+also expended on internal cleanups which are not very visible to our users,
+but should make the codebase cleaner, safer and easier to maintain and extend.
+One point worth mentioning is refactoring the large monolithic framework for
+architecture-specific codec optimizations into small blocks, which reduces the
+size of configurations that selectively enable or disable certain codecs.
+
+The avserver streaming tool, which has not been maintained for many years and
+was mostly broken, was removed from the tree. It was decided that it is a
+significant maintenance burden and that we do our users no service by pretending
+to support it, while we in fact do not.
+
+See the Changelog file for a more extensive list of significant changes.
+
+API changes
+-----------
+
+A number of additional APIs have been introduced and some existing functions
+have been deprecated and are scheduled for removal in the next release.
+Significant API changes include:
+
+[libavcodec]
++  Added the avcodec_copy_context() function that must from now on be used for
+   freeing codec contexts.
++- Added a new VDA hardware acceleration API, since the old one was broken and
+   not fixable in a compatible way. Deprecated the old VDA API.
+
+[libavformat]
++  Added support for exporting stream-global (as opposed to per-packet) side
+   data. This feature is now used by some demuxers to export ReplayGain or
+   display transformation matrix (aka rotation) or stereoscopic 3D mode.
++  Added an API for live metadata updates through event flags.
++- Changed the way to provide a hint about the desired timebase to muxers.
+   Previously it was done by setting AVStream.codec.time_base. Now callers
+   should set AVStream.time_base.
+
+[libavresample]
++ Added an API for working with AVFrames.
+
+Please see the file doc/APIchanges for details along with similar
+programmer-centric information.
