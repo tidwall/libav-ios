@@ -4,13 +4,43 @@ Libav Frameworks for iOS
 Libav is a collection of libraries and tools to process multimedia content
 such as audio, video, subtitles and related metadata.
 
-[Libav Project](https://libav.org/)
+Based on [Libav](https://github.com/libav/libav) v11.3
 
 ## Build
 
 ```./build-ios.sh ```
 
-The resulting binaries are located in the `build/frameworks` directory. 
+The resulting binaries are located in the `build/frameworks` directory.
+
+## Libraries
+
+* `libavcodec` provides implementation of a wider range of codecs.
+* `libavformat` implements streaming protocols, container formats and basic I/O access.
+* `libavutil` includes hashers, decompressors and miscellaneous utility functions.
+* `libavfilter` provides a mean to alter decoded Audio and Video through chain of filters.
+* `libavdevice` provides an abstraction to access capture and playback devices.
+* `libavresample` implements audio mixing and resampling routines.
+* `libswscale` implements color conversion and scaling routines.
+
+## Tools
+
+* [avconv](http://libav.org/avconv.html) is a command line toolbox to
+  manipulate, convert and stream multimedia content.
+* [avplay](http://libav.org/avplay.html) is a minimalistic multimedia player.
+* [avprobe](http://libav.org/avprobe.html) is a simple analisys tool to inspect
+  multimedia content.
+* Additional small tools such as `aviocat`, `ismindex` and `qt-faststart`.
+
+## Documentation
+
+The offline documentation is available in the **doc/** directory.
+
+The online documentation is available in the main [website](http://libav.org)
+and in the [wiki](http://wiki.libav.org).
+
+### Examples
+
+Conding examples are available in the **doc/example** directory.
 
 ## License
 
