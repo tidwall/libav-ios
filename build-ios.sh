@@ -26,7 +26,7 @@ mkdir -p build/armv7/install && cd build/armv7
 --sysroot=`xcrun --sdk iphoneos${SDK_VERSION} --show-sdk-path` \
 --target-os=darwin \
 --extra-cflags='-arch armv7 -Wno-asm-operand-widths -integrated-as' \
---extra-ldflags='-arch armv7 -miphoneos-version-min=5.1' \
+--extra-ldflags='-arch armv7 -miphoneos-version-min=10.0' \
 --enable-cross-compile --enable-pic \
 --disable-programs
 
